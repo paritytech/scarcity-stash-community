@@ -1,0 +1,30 @@
+{
+  "version": 0,
+  "descriptorPath": ".papi/descriptors",
+  "entries": {
+    "paseoAssetHub": {
+      "wsUrl": "wss://paseo-asset-hub-next-rpc.polkadot.io",
+      "metadata": ".papi/metadata/paseoAssetHub.scale",
+      "genesis": "0x4349b00e54897e21196fd331015fc5be0f14e118beb0375ed2bb1793737bb57a",
+      "codeHash": "0xd1ee06e7e13dee315971e5d7c7634390e43afd802b588faefb0cc910a790d031"
+    },
+    "paseoPeople": {
+      "wsUrl": "wss://paseo-people-next-system-rpc.polkadot.io",
+      "metadata": ".papi/metadata/paseoPeople.scale",
+      "genesis": "0x4a2b5b737de1da59e209b0000a876ec2fa20035dc34fd292a848da32d255ad48",
+      "codeHash": "0x69e7126f098bdf708302e52b892fd76c5d2477627bce47cbfcee7fcd5db17871"
+    },
+    "previewnetAssetHub": {
+      "wsUrl": "wss://previewnet.substrate.dev/asset-hub",
+      "metadata": ".papi/metadata/previewnetAssetHub.scale",
+      "genesis": "0xf7d88e2e343e911c9a5c1a7e6ed53d06ef4cd73276fc3afff87062a1f6f90514",
+      "codeHash": "0xe03444d9aad5089f049c38bde11a2280a7e4413e80f2e0e24ffc36e93d8a7f6c"
+    },
+    "previewnetPeople": {
+      "wsUrl": "wss://previewnet.substrate.dev/people",
+      "metadata": ".papi/metadata/previewnetPeople.scale",
+      "genesis": "0x732abb4e3052154ebd9201a375b0aacf2d1fe7015700235c0a8b30d44b401c19",
+      "codeHash": "0x4cb6604dc0588cc27df3fc7f274b00cd26fd7211d51bad29e9954984a4074f07"
+    }
+  }
+}

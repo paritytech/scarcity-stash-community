@@ -1,0 +1,13 @@
+# Generated or vendored: never reformatted.
+dist/
+.papi/descriptors/
+.papi/metadata/
+coverage/
+package-lock.json
+public/
+
+# Prose stays as written.
+*.md
+
+# Editor and agent settings, local to a machine.
+.claude/

@@ -1,0 +1,336 @@
+/* Copyright 2026 Parity Technologies (UK) Ltd.
+   SPDX-License-Identifier: GPL-3.0-only */
+
+/* Tokens
+   One dark palette for every screen: a
+   near-black ground, two surface steps, three text steps, and a light pill for
+   the one action that matters on a screen. The holo foil marks what is rare. */
+:root {
+  --bg: #0b0c0f;
+  --surface: #1a1b20;
+  --nested: #23252a;
+  --fg: #f4f4f5;
+  --fg2: #8c8f98;
+  --fg3: #585b62;
+  --stroke: #23252a;
+  --act: #dadbe0;
+  --onact: #0b0c0f;
+  --tert: #23252a;
+  --tert-ring: transparent;
+  --glass: rgb(26 27 32 / 82%);
+  --holo: linear-gradient(
+    151deg,
+    #8d8e8e 0%,
+    #a5a5a6 6%,
+    #b2b3b3 11%,
+    #bfbfc0 16%,
+    #cbcbcd 21%,
+    #d6d7d9 26%,
+    #dbdcde 31%,
+    #dcdee0 41%,
+    #d2d4e0 46%,
+    #c5cde5 51%,
+    #c5d3ed 54%,
+    #d4e3f0 59%,
+    #dfe7ee 63%,
+    #eeeef0 66%,
+    #f7f5f4 71%,
+    #faede2 76%,
+    #f6dcc5 81%,
+    #dfc7b2 86%,
+    #baafaa 91%,
+    #aea6a5 100%
+  );
+  --sheet-shadow: 0 -14px 40px rgb(0 0 0 / 55%);
+  --pop-shadow: 0 14px 36px rgb(0 0 0 / 60%);
+  --font-title: 'Manrope', -apple-system, 'SF Pro Display', system-ui, sans-serif;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+}
+
+/* Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  font-family: var(--font-ui);
+  color: var(--fg);
+  -webkit-user-select: none;
+  user-select: none;
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+button {
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  touch-action: manipulation;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid #4d8dff;
+  outline-offset: 2px;
+}
+
+/* The app fills the whole viewport. */
+.page {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  contain: layout paint;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Shared controls
+   The grid's own controls, used by every screen: one light pill for the main
+   action, a ghost pill beside it, round icon buttons, chips that turn light
+   when on, and a rounded search field. */
+.ui-primary {
+  height: 52px;
+  padding: 0 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--onact);
+  white-space: nowrap;
+  background: var(--act);
+  border: 0;
+  border-radius: 26px;
+  transition: transform 0.2s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.ui-primary:active {
+  transform: scale(0.97);
+}
+
+.ui-primary:disabled {
+  opacity: 0.4;
+}
+
+.ui-ghost {
+  height: 52px;
+  padding: 0 16px;
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--nested);
+  border: 0;
+  border-radius: 26px;
+  transition: transform 0.2s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.ui-ghost:active {
+  transform: scale(0.97);
+}
+
+.ui-ghost--wide {
+  flex: 1;
+}
+
+.ui-icon {
+  display: grid;
+  flex: 0 0 44px;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--fg);
+  background: var(--tert);
+  border: 0;
+  border-radius: 22px;
+  box-shadow: inset 0 0 0 1px var(--tert-ring);
+  transition: transform 0.2s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.ui-icon:active {
+  transform: scale(0.92);
+}
+
+.ui-icon--sm {
+  position: relative;
+  flex-basis: 36px;
+  width: 36px;
+  height: 36px;
+}
+
+/* Small to look at, 44 px to touch. */
+.ui-icon--sm::after {
+  position: absolute;
+  inset: -4px;
+  content: '';
+}
+
+.ui-chip {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  height: 44px;
+  padding: 0 14px;
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--nested);
+  border: 0;
+  border-radius: 20px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.ui-chip[aria-pressed='true'] {
+  color: var(--onact);
+  background: var(--act);
+}
+
+.ui-field {
+  position: relative;
+  display: block;
+  flex: 1;
+}
+
+/* The icon sits centred and in ems, so it keeps clear of the text at any
+   text size. */
+.ui-field > svg {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  color: var(--fg2);
+  transform: translateY(-50%);
+}
+
+.ui-field input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 16px 10px calc(1em + 24px);
+  font: 16px/20px var(--font-ui);
+  color: var(--fg);
+  user-select: text;
+  background: var(--tert);
+  border: 0;
+  border-radius: 22px;
+  box-shadow: inset 0 0 0 1px var(--tert-ring);
+}
+
+.ui-field input:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--fg2);
+}
+
+.ui-field input::placeholder {
+  color: var(--fg2);
+}
+
+.ui-textbtn {
+  height: 44px;
+  padding: 0 4px;
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg);
+  background: none;
+  border: 0;
+}
+
+.ui-spin {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  background: conic-gradient(from 0deg, #c5d3ed, #f7f5f4, #f6dcc5, #dfc7b2, #8d8e8e, #c5d3ed);
+  border-radius: 50%;
+  mask: radial-gradient(circle, transparent 6px, #000 6.5px);
+  animation: ui-spin 1s linear infinite;
+}
+
+@keyframes ui-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Whole-screen states: opening, outside the app, offline, broken */
+.state-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+  background: var(--bg);
+}
+
+.state-screen--fatal {
+  position: fixed;
+  z-index: 1000;
+}
+
+.state-busy {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg2);
+}
+
+.state-title {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--fg);
+}
+
+.state-copy {
+  max-width: 300px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--fg2);
+}
+
+.state-screen .ui-primary {
+  margin-top: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-spin {
+    animation: none;
+  }
+}
